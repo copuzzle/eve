@@ -152,6 +152,26 @@ class TestSQLParser(TestCase):
                          'people.firstname IN (:firstname_1, :firstname_2)')
 
 
+        r = parse_dictionary({"firstname": 'gt("bob")'}, self.model)
+        self.assertEqual(str(r[0]),
+                         'people.firstname > :firstname_1')
+
+        r = parse_dictionary({"firstname": 'lt("bob")'}, self.model)
+        self.assertEqual(str(r[0]),
+                         'people.firstname < :firstname_1')
+
+        r = parse_dictionary({"firstname": 'ge("bob")'}, self.model)
+        self.assertEqual(str(r[0]),
+                         'people.firstname >= :firstname_1')
+
+        r = parse_dictionary({"firstname": 'le("bob")'}, self.model)
+        self.assertEqual(str(r[0]),
+                         'people.firstname <= :firstname_1')
+
+        r = parse_dictionary({"firstname": 'ne("bob")'}, self.model)
+        self.assertEqual(str(r[0]),
+                         'people.firstname != :firstname_1')
+
 class TestSQLStructures(TestCase):
 
     def setUp(self):
